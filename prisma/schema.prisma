@@ -1,0 +1,111 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String    @map("password_hash")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  
+  jobApplications JobApplication[]
+  connections     Connection[]
+  outreachEntries OutreachEntry[]
+  sessions        Session[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  expiresAt DateTime @map("expires_at")
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model JobApplication {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  company     String
+  role        String
+  status      JobStatus @default(WISHLIST)
+  url         String?  @db.Text
+  location    String?
+  salaryRange String?  @map("salary_range")
+  notes       String?  @db.Text
+  appliedAt   DateTime? @map("applied_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@index([company])
+  @@map("job_applications")
+}
+
+enum JobStatus {
+  WISHLIST
+  APPLIED
+  SCREEN
+  INTERVIEW
+  OFFER
+  REJECTED
+}
+
+model Connection {
+  id         String   @id @default(uuid())
+  userId     String   @map("user_id")
+  name       String
+  company    String?
+  title      String?
+  email      String?
+  linkedinUrl String? @map("linkedin_url")
+  notes      String?  @db.Text
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  outreachEntries OutreachEntry[]
+
+  @@index([userId])
+  @@map("connections")
+}
+
+model OutreachEntry {
+  id          String        @id @default(uuid())
+  connectionId String       @map("connection_id")
+  userId      String        @map("user_id")
+  type        OutreachType
+  occurredAt  DateTime      @map("occurred_at")
+  notes       String        @db.Text
+  createdAt   DateTime      @default(now()) @map("created_at")
+  
+  connection Connection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([connectionId])
+  @@index([userId])
+  @@map("outreach_entries")
+}
+
+enum OutreachType {
+  EMAIL
+  LINKEDIN
+  CALL
+  OTHER
+}
+
