@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { lucia } from "@/lib/auth";
-import { verify } from "bcryptjs";
+import { compare } from "bcryptjs";
 import { z } from "zod";
 import { cookies } from "next/headers";
 
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     }
 
     // Verify password
-    const validPassword = await verify(user.passwordHash, password);
+    const validPassword = await compare(password, user.passwordHash);
     if (!validPassword) {
       return NextResponse.json(
         { error: "Invalid email or password" },
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
     }
     console.error("Login error:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Internal server error", details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }
