@@ -85,12 +85,12 @@ export default function JobDetailPage({ job: initialJob }: { job: Job }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Nav />
-      <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
+      <main className="ml-64 min-h-screen py-6 px-8">
+        <div className="py-6 max-w-4xl">
           <div className="mb-4">
-            <Link href="/jobs" className="text-blue-600 hover:text-blue-700 text-sm">
+            <Link href="/jobs" className="text-purple-600 hover:text-purple-700 text-sm">
               ← Back to Jobs
             </Link>
           </div>
@@ -196,7 +196,7 @@ export default function JobDetailPage({ job: initialJob }: { job: Job }) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50"
+                  className="flex-1 bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 disabled:opacity-50"
                 >
                   {loading ? "Saving..." : "Save Changes"}
                 </button>

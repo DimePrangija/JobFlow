@@ -145,12 +145,12 @@ export default function ConnectionDetailPage({ connection: initialConnection }: 
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Nav />
-      <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
+      <main className="ml-64 min-h-screen py-6 px-8">
+        <div className="py-6 max-w-4xl">
           <div className="mb-4">
-            <Link href="/connections" className="text-blue-600 hover:text-blue-700 text-sm">
+            <Link href="/connections" className="text-purple-600 hover:text-purple-700 text-sm">
               ← Back to Connections
             </Link>
           </div>
@@ -230,7 +230,7 @@ export default function ConnectionDetailPage({ connection: initialConnection }: 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50"
+                  className="flex-1 bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 disabled:opacity-50"
                 >
                   {loading ? "Saving..." : "Save Changes"}
                 </button>
@@ -290,7 +290,7 @@ export default function ConnectionDetailPage({ connection: initialConnection }: 
               </div>
               <button
                 type="submit"
-                className="mt-3 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm"
+                className="mt-3 bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 text-sm"
               >
                 Add Entry
               </button>
@@ -312,7 +312,7 @@ export default function ConnectionDetailPage({ connection: initialConnection }: 
                         )}
                         <div className="relative flex space-x-3">
                           <div>
-                            <span className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white">
+                            <span className="h-8 w-8 rounded-full bg-purple-500 flex items-center justify-center ring-8 ring-white">
                               <span className="text-white text-xs font-medium">
                                 {entry.type.charAt(0)}
                               </span>
