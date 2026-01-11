@@ -16,14 +16,15 @@ const updateJobSchema = z.object({
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { user } = await requireAuth();
+    const { id } = await params;
 
     const job = await prisma.jobApplication.findFirst({
       where: {
-        id: params.id,
+        id,
         userId: user.id,
       },
     });
@@ -53,17 +54,18 @@ export async function GET(
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { user } = await requireAuth();
+    const { id } = await params;
     const body = await request.json();
     const data = updateJobSchema.parse(body);
 
     // Verify ownership
     const existing = await prisma.jobApplication.findFirst({
       where: {
-        id: params.id,
+        id,
         userId: user.id,
       },
     });
@@ -86,7 +88,7 @@ export async function PATCH(
     if (data.appliedAt !== undefined) updateData.appliedAt = data.appliedAt ? new Date(data.appliedAt) : null;
 
     const job = await prisma.jobApplication.update({
-      where: { id: params.id },
+      where: { id },
       data: updateData,
     });
 
@@ -114,15 +116,16 @@ export async function PATCH(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { user } = await requireAuth();
+    const { id } = await params;
 
     // Verify ownership
     const existing = await prisma.jobApplication.findFirst({
       where: {
-        id: params.id,
+        id,
         userId: user.id,
       },
     });
@@ -135,7 +138,7 @@ export async function DELETE(
     }
 
     await prisma.jobApplication.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ success: true });
@@ -153,4 +156,3 @@ export async function DELETE(
     );
   }
 }
-

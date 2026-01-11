@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Nav from "@/components/Nav";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -35,11 +35,7 @@ export default function JobsPage() {
     appliedAt: "",
   });
 
-  useEffect(() => {
-    fetchJobs();
-  }, [statusFilter, searchQuery]);
-
-  const fetchJobs = async () => {
+  const fetchJobs = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams();
@@ -56,7 +52,11 @@ export default function JobsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [statusFilter, searchQuery]);
+
+  useEffect(() => {
+    fetchJobs();
+  }, [fetchJobs]);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();

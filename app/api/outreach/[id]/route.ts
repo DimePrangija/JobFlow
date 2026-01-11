@@ -4,15 +4,16 @@ import { requireAuth } from "@/lib/auth";
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { user } = await requireAuth();
+    const { id } = await params;
 
     // Verify ownership
     const existing = await prisma.outreachEntry.findFirst({
       where: {
-        id: params.id,
+        id,
         userId: user.id,
       },
     });
@@ -25,7 +26,7 @@ export async function DELETE(
     }
 
     await prisma.outreachEntry.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ success: true });
@@ -43,4 +44,3 @@ export async function DELETE(
     );
   }
 }
-

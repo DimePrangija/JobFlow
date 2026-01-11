@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Nav from "@/components/Nav";
 import Link from "next/link";
 
@@ -27,11 +27,7 @@ export default function ConnectionsPage() {
     notes: "",
   });
 
-  useEffect(() => {
-    fetchConnections();
-  }, [searchQuery]);
-
-  const fetchConnections = async () => {
+  const fetchConnections = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams();
@@ -47,7 +43,11 @@ export default function ConnectionsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchQuery]);
+
+  useEffect(() => {
+    fetchConnections();
+  }, [fetchConnections]);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();

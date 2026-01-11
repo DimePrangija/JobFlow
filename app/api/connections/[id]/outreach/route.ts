@@ -11,15 +11,16 @@ const outreachSchema = z.object({
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { user } = await requireAuth();
+    const { id } = await params;
 
     // Verify connection ownership
     const connection = await prisma.connection.findFirst({
       where: {
-        id: params.id,
+        id,
         userId: user.id,
       },
     });
@@ -33,7 +34,7 @@ export async function GET(
 
     const outreach = await prisma.outreachEntry.findMany({
       where: {
-        connectionId: params.id,
+        connectionId: id,
         userId: user.id,
       },
       orderBy: {
@@ -59,17 +60,18 @@ export async function GET(
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { user } = await requireAuth();
+    const { id } = await params;
     const body = await request.json();
     const data = outreachSchema.parse(body);
 
     // Verify connection ownership
     const connection = await prisma.connection.findFirst({
       where: {
-        id: params.id,
+        id,
         userId: user.id,
       },
     });
@@ -83,7 +85,7 @@ export async function POST(
 
     const outreach = await prisma.outreachEntry.create({
       data: {
-        connectionId: params.id,
+        connectionId: id,
         userId: user.id,
         type: data.type,
         occurredAt: new Date(data.occurredAt),
