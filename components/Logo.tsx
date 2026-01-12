@@ -1,4 +1,10 @@
+"use client";
+
+import { useId } from "react";
+
 export default function Logo({ className }: { className?: string }) {
+  const gradientId = useId();
+  
   return (
     <svg 
       width="220" 
@@ -9,7 +15,7 @@ export default function Logo({ className }: { className?: string }) {
       className={className}
     >
       <defs>
-        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" style={{ stopColor: "#A855F7" }} />
           <stop offset="50%" style={{ stopColor: "#3B82F6" }} />
           <stop offset="100%" style={{ stopColor: "#22C55E" }} />
@@ -17,25 +23,25 @@ export default function Logo({ className }: { className?: string }) {
       </defs>
 
       <text 
-        x="0" 
-        y="45" 
+        x="5" 
+        y="42" 
         fontFamily="Arial, Helvetica, sans-serif" 
         fontWeight="bold" 
-        fontSize="42" 
-        fill="url(#logoGradient)" 
-        letterSpacing="-1"
+        fontSize="38" 
+        fill={`url(#${gradientId})`}
+        letterSpacing="-0.5"
       >
         JobFlow
       </text>
 
-      <g transform="translate(170, 10)">
-        <circle cx="0" cy="20" r="4" fill="#22C55E" />
-        <circle cx="15" cy="5" r="4" fill="#22C55E" />
-        <circle cx="25" cy="25" r="4" fill="#22C55E" />
+      <g transform="translate(165, 8)">
+        <circle cx="0" cy="20" r="3.5" fill="#22C55E" />
+        <circle cx="14" cy="5" r="3.5" fill="#22C55E" />
+        <circle cx="24" cy="24" r="3.5" fill="#22C55E" />
         
-        <line x1="0" y1="20" x2="15" y2="5" stroke="#22C55E" strokeWidth="2.5" />
-        <line x1="15" y1="5" x2="25" y2="25" stroke="#22C55E" strokeWidth="2.5" />
-        <line x1="0" y1="20" x2="25" y2="25" stroke="#22C55E" strokeWidth="2.5" />
+        <line x1="0" y1="20" x2="14" y2="5" stroke="#22C55E" strokeWidth="2" />
+        <line x1="14" y1="5" x2="24" y2="24" stroke="#22C55E" strokeWidth="2" />
+        <line x1="0" y1="20" x2="24" y2="24" stroke="#22C55E" strokeWidth="2" />
       </g>
     </svg>
   );
