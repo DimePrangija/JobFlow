@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import Logo from "@/components/Logo";
 
 const DashboardIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,12 +61,9 @@ export default function Nav() {
   return (
     <nav className="fixed left-0 top-0 h-screen w-64 bg-gradient-to-b from-purple-700 via-purple-600 to-purple-700 flex flex-col shadow-2xl border-r border-purple-800">
       <div className="p-6 border-b border-purple-500/30">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
-            <span className="text-xl font-bold text-white">JF</span>
-          </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">JobFlow</h1>
-        </div>
+        <Link href="/" className="flex items-center justify-center">
+          <Logo className="w-36 h-auto" />
+        </Link>
       </div>
       
       <div className="flex-1 px-4 py-6 overflow-y-auto">

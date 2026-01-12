@@ -50,8 +50,17 @@ export async function POST(request: Request) {
       );
     }
     console.error("Login error:", error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    
+    // In production, don't expose error details to client
+    const isDevelopment = process.env.NODE_ENV === "development";
+    
     return NextResponse.json(
-      { error: "Internal server error", details: error instanceof Error ? error.message : String(error) },
+      { 
+        error: "Internal server error",
+        ...(isDevelopment && { details: errorMessage, stack: errorStack })
+      },
       { status: 500 }
     );
   }

@@ -71,7 +71,18 @@ Before deploying, add these environment variables in Vercel:
    NODE_ENV = production
    ```
 
+   **⚠️ IMPORTANT FOR DATABASE_URL:**
+   - Must start with `postgresql://` (NOT `postgres://` or anything else)
+   - Should include `?sslmode=require` at the end for cloud databases
+   - No quotes, no spaces around the value
+   - Example: `postgresql://user:pass@host:5432/dbname?sslmode=require`
+
 3. Click "Add" for each variable
+
+4. **Verify the format:**
+   - Double-check there are no extra spaces
+   - Make sure it starts with `postgresql://`
+   - Ensure SSL mode is set (usually `?sslmode=require`)
 
 ---
 
