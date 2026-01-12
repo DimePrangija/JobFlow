@@ -102,8 +102,8 @@ export default function Nav() {
         mobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       )}>
         <div className="p-6 border-b border-purple-500/30">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center justify-center flex-1" onClick={() => setMobileMenuOpen(false)}>
+          <div className="flex items-center justify-between lg:justify-center">
+            <Link href="/" className="flex items-center justify-center flex-1 lg:flex-none" onClick={() => setMobileMenuOpen(false)}>
               <Logo className="w-36 h-auto" />
             </Link>
             <button
