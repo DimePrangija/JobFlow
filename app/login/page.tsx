@@ -26,7 +26,7 @@ export default async function LoginPage() {
             </p>
             <LoginForm />
           </div>
-          <div className="px-8 pb-8 pt-4 bg-gray-50 border-t border-gray-200">
+          <div className="px-6 sm:px-8 pb-8 pt-4 bg-gray-50 border-t border-gray-200">
             <div className="text-center">
               <a href="/signup" className="text-sm text-purple-600 hover:text-purple-700 font-medium transition-colors">
                 Don&apos;t have an account? <span className="font-semibold">Sign up</span>

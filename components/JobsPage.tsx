@@ -114,7 +114,7 @@ export default function JobsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <Nav />
-      <main className="ml-64 min-h-screen py-8 px-10">
+      <main className="lg:ml-64 min-h-screen py-8 px-4 sm:px-6 lg:px-10 pt-16 lg:pt-8">
         <div className="py-6">
           <div className="flex justify-between items-center mb-8">
             <div>
@@ -151,7 +151,7 @@ export default function JobsPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white shadow-sm font-medium text-gray-700 cursor-pointer transition-all"
+              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white shadow-sm font-medium text-gray-700 cursor-pointer transition-all w-full sm:w-auto"
             >
               {STATUSES.map((status) => (
                 <option key={status} value={status}>

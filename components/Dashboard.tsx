@@ -71,11 +71,11 @@ export default async function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <Nav />
-      <main className="ml-64 min-h-screen py-8 px-10">
+      <main className="lg:ml-64 min-h-screen py-8 px-4 sm:px-6 lg:px-10 pt-16 lg:pt-8">
         <div className="py-6">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Dashboard</h1>
-            <p className="text-gray-600">Overview of your job search and network</p>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Dashboard</h1>
+            <p className="text-gray-600 text-sm sm:text-base">Overview of your job search and network</p>
           </div>
 
           {/* Key Metrics */}
@@ -168,8 +168,8 @@ export default async function Dashboard() {
                             className={`h-full ${colors.bg} rounded-full transition-all duration-500 group-hover:shadow-md`}
                             style={{ width: `${percentage}%` }}
                           />
-                        </div>
-                      </div>
+                  </div>
+                  </div>
                     );
                   })}
                 </div>
@@ -193,9 +193,9 @@ export default async function Dashboard() {
                   <div>
                     <div className="text-2xl font-bold text-blue-900">{statusCounts.INTERVIEW}</div>
                     <div className="text-sm text-blue-700 font-medium">Interviews</div>
-                  </div>
+                    </div>
                   <div className="text-3xl">🎯</div>
-                </div>
+                    </div>
                 <div className="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-xl border border-green-200">
                   <div>
                     <div className="text-2xl font-bold text-green-900">{statusCounts.APPLIED}</div>
@@ -262,9 +262,9 @@ export default async function Dashboard() {
                   </div>
                 )}
               </div>
-            </div>
+          </div>
 
-            {/* Recent Outreach */}
+          {/* Recent Outreach */}
             <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
               <div className="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white flex items-center justify-between">
                 <div>
@@ -276,7 +276,7 @@ export default async function Dashboard() {
                 </Link>
               </div>
               <div className="p-6">
-                {recentOutreach.length === 0 ? (
+              {recentOutreach.length === 0 ? (
                   <div className="text-center py-8">
                     <p className="text-gray-500">No outreach entries yet.</p>
                     <Link href="/connections" className="text-purple-600 hover:text-purple-700 text-sm font-medium mt-2 inline-block">
@@ -287,24 +287,24 @@ export default async function Dashboard() {
                   <div className="space-y-4">
                     {recentOutreach.map((entry, idx) => (
                       <div key={entry.id} className="relative">
-                        {idx !== recentOutreach.length - 1 && (
+                          {idx !== recentOutreach.length - 1 && (
                           <div className="absolute left-6 top-12 bottom-0 w-0.5 bg-gradient-to-b from-purple-200 to-transparent" />
                         )}
                         <div className="flex items-start space-x-4 group">
                           <div className="relative z-10 flex-shrink-0">
                             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200">
                               <span className="text-white text-lg font-bold">
-                                {entry.type.charAt(0)}
+                                  {entry.type.charAt(0)}
                               </span>
                             </div>
                           </div>
                           <div className="flex-1 min-w-0 pt-1">
-                            <Link
-                              href={`/connections/${entry.connection.id}`}
+                                  <Link
+                                    href={`/connections/${entry.connection.id}`}
                               className="font-semibold text-gray-900 hover:text-purple-600 transition-colors block"
-                            >
-                              {entry.connection.name}
-                            </Link>
+                                  >
+                                    {entry.connection.name}
+                                  </Link>
                             <p className="text-sm text-gray-600 mt-0.5">
                               <span className="font-medium text-purple-600">{entry.type}</span>
                               {" • "}
@@ -324,8 +324,8 @@ export default async function Dashboard() {
                         </div>
                       </div>
                     ))}
-                  </div>
-                )}
+                </div>
+              )}
               </div>
             </div>
           </div>

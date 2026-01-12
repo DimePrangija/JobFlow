@@ -87,7 +87,7 @@ export default function JobDetailPage({ job: initialJob }: { job: Job }) {
   return (
     <div className="min-h-screen bg-white">
       <Nav />
-      <main className="ml-64 min-h-screen py-6 px-8">
+      <main className="lg:ml-64 min-h-screen py-6 px-4 sm:px-6 lg:px-8 pt-16 lg:pt-6">
         <div className="py-6 max-w-4xl">
           <div className="mb-4">
             <Link href="/jobs" className="text-purple-600 hover:text-purple-700 text-sm">

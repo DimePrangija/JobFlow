@@ -11,10 +11,10 @@ export default async function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-50">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-50 px-4 py-8">
       <div className="max-w-md w-full">
         <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
-          <div className="px-8 pt-8 pb-6">
+          <div className="px-6 sm:px-8 pt-8 pb-6">
             <div className="flex justify-center mb-6">
               <Logo className="w-44 h-auto" />
             </div>
@@ -26,7 +26,7 @@ export default async function SignupPage() {
             </p>
             <SignupForm />
           </div>
-          <div className="px-8 pb-8 pt-4 bg-gray-50 border-t border-gray-200">
+          <div className="px-6 sm:px-8 pb-8 pt-4 bg-gray-50 border-t border-gray-200">
             <div className="text-center">
               <a href="/login" className="text-sm text-purple-600 hover:text-purple-700 font-medium transition-colors">
                 Already have an account? <span className="font-semibold">Sign in</span>
