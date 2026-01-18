@@ -23,6 +23,13 @@ export default function JobsPage() {
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    pageSize: 20,
+    total: 0,
+    totalPages: 1,
+  });
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     company: "",
@@ -41,17 +48,25 @@ export default function JobsPage() {
       const params = new URLSearchParams();
       if (statusFilter !== "ALL") params.append("status", statusFilter);
       if (searchQuery) params.append("q", searchQuery);
+      params.append("page", currentPage.toString());
       
       const res = await fetch(`/api/jobs?${params.toString()}`);
       const data = await res.json();
       if (res.ok) {
         setJobs(data.jobs);
+        if (data.pagination) {
+          setPagination(data.pagination);
+        }
       }
     } catch (error) {
       console.error("Failed to fetch jobs:", error);
     } finally {
       setLoading(false);
     }
+  }, [statusFilter, searchQuery, currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(1);
   }, [statusFilter, searchQuery]);
 
   useEffect(() => {
@@ -236,6 +251,68 @@ export default function JobsPage() {
                   </Link>
                 );
               })}
+            </div>
+          )}
+
+          {/* Pagination */}
+          {!loading && jobs.length > 0 && pagination.totalPages > 1 && (
+            <div className="mt-8 flex items-center justify-center gap-2">
+              <button
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 rounded-xl border border-gray-300 bg-white text-gray-700 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all disabled:hover:bg-white flex items-center space-x-1"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span>Previous</span>
+              </button>
+
+              <div className="flex items-center gap-1">
+                {Array.from({ length: Math.min(7, pagination.totalPages) }, (_, i) => {
+                  let pageNum: number;
+                  if (pagination.totalPages <= 7) {
+                    pageNum = i + 1;
+                  } else if (currentPage <= 4) {
+                    pageNum = i + 1;
+                  } else if (currentPage >= pagination.totalPages - 3) {
+                    pageNum = pagination.totalPages - 6 + i;
+                  } else {
+                    pageNum = currentPage - 3 + i;
+                  }
+
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => setCurrentPage(pageNum)}
+                      className={`px-4 py-2 rounded-xl border font-medium transition-all ${
+                        currentPage === pageNum
+                          ? "bg-purple-600 text-white border-purple-600 shadow-lg"
+                          : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <button
+                onClick={() => setCurrentPage((p) => Math.min(pagination.totalPages, p + 1))}
+                disabled={currentPage === pagination.totalPages}
+                className="px-4 py-2 rounded-xl border border-gray-300 bg-white text-gray-700 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all disabled:hover:bg-white flex items-center space-x-1"
+              >
+                <span>Next</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          )}
+
+          {!loading && jobs.length > 0 && (
+            <div className="mt-4 text-center text-sm text-gray-500">
+              Showing {((currentPage - 1) * pagination.pageSize) + 1} to {Math.min(currentPage * pagination.pageSize, pagination.total)} of {pagination.total} jobs
             </div>
           )}
         </div>
